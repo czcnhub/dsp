@@ -1,8 +1,9 @@
+import re
 from datetime import datetime
 from enum import Enum
 from typing import Any, List, Optional
 
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl, validator
 
 
 class Provider(BaseModel):
@@ -21,6 +22,10 @@ class SpatialCoverage(BaseModel):
 class Creator(BaseModel):
     name: str = Field(description="The creator name")
 
+    @validator("name")
+    def name_remove_null(cls, v):
+        v = re.sub(r"\bnull\b", "", v).strip()
+        return v
 
 class CreatorList(BaseModel):
     list: List[Creator] = Field(alias="@list", default=[], description="A list of creator names")
