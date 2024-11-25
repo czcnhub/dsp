@@ -52,6 +52,8 @@ async def test_get_access_token_expired(client_test, user_cookie, authorize_resp
     with patch.object(StarletteRemoteApp, 'authorize_access_token', return_value=authorize_response_expired):
         response = await client_test.get(prefix + "/auth/zenodo?access_token=" + user_cookie, follow_redirects=False)
 
+    if user_cookie == "***":
+        pytest.skip("User cookie is invalid, skipping test_get_access_token_expired")
     response = await client_test.get(
         prefix + "/access_token/zenodo?access_token=" + user_cookie, follow_redirects=False
     )
