@@ -110,7 +110,8 @@
               "This resource requires",
               "This resource is referenced by",
               "The content of this resource references",
-              "The content of this resource is derived from"
+              "The content of this resource is derived from",
+              "The content of this resource is similar to"
             ],
             "type": "string"
           },
