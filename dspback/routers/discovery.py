@@ -57,6 +57,8 @@ async def search(
     creatorName: str = None,
     dataCoverageStart: int = None,
     dataCoverageEnd: int = None,
+    creationDateStart: int = None,
+    creationDateEnd: int = None,
     publishedStart: int = None,
     publishedEnd: int = None,
     clusters: list[str] | None = Query(default=None),
@@ -70,6 +72,8 @@ async def search(
         dataCoverageEnd,
         dataCoverageStart,
         providerName,
+        creationDateStart,
+        creationDateEnd,
         publishedEnd,
         publishedStart,
         sortBy,
@@ -115,6 +119,8 @@ async def search(
     creatorName: str = None,
     dataCoverageStart: int = None,
     dataCoverageEnd: int = None,
+    creationDateStart: int = None,
+    creationDateEnd: int = None,
     publishedStart: int = None,
     publishedEnd: int = None,
     clusters: list[str] | None = Query(default=None),
@@ -128,6 +134,8 @@ async def search(
         dataCoverageEnd,
         dataCoverageStart,
         providerName,
+        creationDateStart,
+        creationDateEnd,
         publishedEnd,
         publishedStart,
         sortBy,
@@ -160,6 +168,8 @@ async def search_fuzzy_feedback(
     creatorName: str = None,
     dataCoverageStart: int = None,
     dataCoverageEnd: int = None,
+    creationDateStart: int = None,
+    creationDateEnd: int = None,
     publishedStart: int = None,
     publishedEnd: int = None,
     clusters: list[str] | None = Query(default=None),
@@ -173,6 +183,8 @@ async def search_fuzzy_feedback(
         dataCoverageEnd,
         dataCoverageStart,
         providerName,
+        creationDateStart,
+        creationDateEnd,
         publishedEnd,
         publishedStart,
         sortBy,
@@ -212,6 +224,8 @@ async def base_search(
     dataCoverageEnd,
     dataCoverageStart,
     providerName,
+    creationDateStart,
+    creationDateEnd,
     publishedEnd,
     publishedStart,
     sortBy,
@@ -220,6 +234,10 @@ async def base_search(
     must = []
     stages = []
     filters = []
+    if creationDateStart:
+        filters.append({'range': {'path': 'dateCreated', 'gte': datetime(creationDateStart, 1, 1)}})
+    if creationDateEnd:
+        filters.append({'range': {'path': 'dateCreated', 'lt': datetime(creationDateEnd + 1, 1, 1)}})
     if publishedStart:
         filters.append(
             {
