@@ -40,7 +40,6 @@ async def test_create_external_record(client_test, user_cookie, external):
     assert len(await submission_check(client_test, user_cookie)) == 1
 
 
-@pytest.mark.skip
 async def test_update_external_record(client_test, user_cookie, external):
     identifier = await new_external_record(client_test, user_cookie, external)
 
@@ -52,6 +51,12 @@ async def test_update_external_record(client_test, user_cookie, external):
     assert response.status_code == 200
     assert response.json()["metadata"]["name"] == "updated title"
 
+    response = await client_test.get(prefix + "/metadata/external/" + identifier + "?access_token=" + user_cookie)
+
+    assert response.status_code == 200
+    assert response.json()["metadata"]["name"] == "updated title"
+    assert response.json()["metadata"]["relations"][0]['type'] == "The content of this resource can be executed by"
+
 
 async def test_get_external_record(client_test, user_cookie, external):
     identifier = await new_external_record(client_test, user_cookie, external)
@@ -59,6 +64,7 @@ async def test_get_external_record(client_test, user_cookie, external):
     response = await client_test.get(prefix + "/metadata/external/" + identifier + "?access_token=" + user_cookie)
 
     assert response.json()["metadata"]["name"] == "string"
+    assert response.json()["metadata"]["relations"][0]['type'] == "The content of this resource can be executed by"
 
 
 async def test_delete_external_record(client_test, user_cookie, external):
