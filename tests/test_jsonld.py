@@ -116,7 +116,7 @@ async def test_external_jsonld():
         "keywords": ["CZNet", "Dryland Critical Zone", "Seismic", "Jornada Experimental Range"],
         "creators": [
             {
-                "name": "asdf Karplus",
+                "name": "asdf null Karplus",
                 "organization": "University of Texas at El Paso (UTEP)",
                 "email": "mkarplus@mail",
                 "orcid": "0000-0001-2345-6789",
@@ -168,3 +168,7 @@ async def test_earthchem_jsonld(earthchem_jsonld):
     assert jsonld.funding[0].identifier == "http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=2012123"
     assert len(jsonld.clusters) == 1
     assert jsonld.clusters[0] == "Big Data Cluster"
+
+    # check creator name does not contain null
+    for cr in jsonld.creator.list:
+        assert 'null' not in cr.name
