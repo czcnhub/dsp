@@ -412,7 +412,7 @@
           "title": "ORCID",
           "description": "ORCID identifier for creator.",
           "type": "string",
-          "pattern": "\\b\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]\\b",
+          "pattern": "^\\b\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]\\b",
           "options": {
             "placeholder": "e.g. '0000-0001-2345-6789'"
           },
@@ -453,7 +453,7 @@
           "title": "ORCID",
           "description": "ORCID identifier for contributor.",
           "type": "string",
-          "pattern": "\\b\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]\\b",
+          "pattern": "^\\b\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]\\b",
           "options": {
             "placeholder": "e.g. '0000-0001-2345-6789'"
           },
